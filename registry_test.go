@@ -15,11 +15,16 @@ import (
 
 func TestRegistry_Register(t *testing.T) {
 	sc := []constant.ServerConfig{
-		*constant.NewServerConfig("127.0.0.1", 8848),
+		{
+			IpAddr:      "127.0.0.1",
+			ContextPath: "/nacos",
+			Port:        8848,
+			Scheme:      "http",
+		},
 	}
 
 	cc := constant.ClientConfig{
-		NamespaceId:         "public", // namespace id
+		NamespaceId:         "", // namespace id
 		TimeoutMs:           5000,
 		NotLoadCacheAtStart: true,
 		LogDir:              "/tmp/nacos/log",
