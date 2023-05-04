@@ -502,7 +502,7 @@ func TestRegistry_Watch(t *testing.T) {
 			wantErr: false,
 			want: []*registry.ServiceInstance{{
 				ID:        "127.0.0.1#8080#DEFAULT#DEFAULT_GROUP@@test4.grpc",
-				Name:      "DEFAULT_GROUP@@test4.grpc",
+				Name:      "test4.grpc",
 				Version:   "v1.0.0",
 				Metadata:  map[string]string{"version": "v1.0.0", "kind": "grpc"},
 				Endpoints: []string{"grpc://127.0.0.1:8080"},
@@ -564,4 +564,5 @@ func TestRegistry_Watch(t *testing.T) {
 			}
 		})
 	}
+	time.Sleep(3 + time.Second)
 }

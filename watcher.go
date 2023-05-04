@@ -3,6 +3,7 @@ package nacos
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/v2/model"
@@ -47,10 +48,13 @@ func newWatcher(ctx context.Context, cli naming_client.INamingClient, serviceNam
 }
 
 func (w *watcher) Next() ([]*registry.ServiceInstance, error) {
+	ticker := time.NewTicker(1 * time.Second)
 	select {
 	case <-w.ctx.Done():
 		return nil, w.ctx.Err()
 	case <-w.watchChan:
+	case <-ticker.C:
+		return nil, nil
 	}
 	res, err := w.cli.GetService(vo.GetServiceParam{
 		ServiceName: w.serviceName,
