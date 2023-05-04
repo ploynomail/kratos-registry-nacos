@@ -52,9 +52,7 @@ func (w *watcher) Next() ([]*registry.ServiceInstance, error) {
 	select {
 	case <-w.ctx.Done():
 		return nil, w.ctx.Err()
-	case <-w.watchChan:
 	case <-ticker.C:
-		return nil, nil
 	}
 	res, err := w.cli.GetService(vo.GetServiceParam{
 		ServiceName: w.serviceName,
